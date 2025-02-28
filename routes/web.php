@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,8 +10,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        return Inertia::render('dashboard',[
+            'nfcVideoUrl' => asset('assets/lottie/nfc_scan.webm'),
+        ]);
     })->name('dashboard');
+
+    Route::post('link-card', [CardController::class, 'linkCard'])->name('link-card');
 });
 
 require __DIR__.'/settings.php';
